@@ -13,6 +13,7 @@ import tempfile
 import os
 from st_audiorec import st_audiorec
 import resampy
+import plotly.express as px
 
 # ============================================
 # CONSTANTS - YAMNet Class Mappings
@@ -247,12 +248,6 @@ def main():
         # Audio recorder with waveform visualization
         audio_bytes = st_audiorec()
 
-        # Playback recorded audio
-        if audio_bytes:
-            st.markdown("---")
-            st.markdown("**Playback recorded audio:**")
-            st.audio(audio_bytes, format="audio/wav")
-
         # Also allow file upload
         st.markdown("---")
         st.markdown("**Or upload an audio file:**")
@@ -363,6 +358,20 @@ def main():
                     st.subheader("Top Detected Sounds")
                     top_preds = get_top_predictions(results, top_k=10)
 
+                    # Pie chart of audio class mixture
+                    labels = [pred[0] for pred in top_preds]
+                    values = [pred[1] for pred in top_preds]
+
+                    fig = px.pie(
+                        names=labels,
+                        values=values,
+                        title="Audio Class Distribution"
+                    )
+                    fig.update_traces(textposition='inside', textinfo='percent+label')
+                    fig.update_layout(showlegend=False)
+                    st.plotly_chart(fig, width='stretch')
+
+                    # List view
                     for class_name, score in top_preds:
                         col_a, col_b = st.columns([3, 1])
                         with col_a:
