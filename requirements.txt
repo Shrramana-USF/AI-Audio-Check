@@ -1,7 +1,7 @@
 streamlit>=1.28.0
-tensorflow>=2.13.0
-tensorflow-hub>=0.14.0
-numpy>=1.24.0
+tensorflow-cpu==2.15.0
+tensorflow-hub==0.15.0
+numpy>=1.24.0,<2.0.0
 soundfile>=0.12.0
 streamlit-audiorec>=0.1.0
 resampy>=0.4.2
