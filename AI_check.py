@@ -34,13 +34,13 @@ YAMNET_SAMPLE_RATE = 16000
 
 @st.cache_resource
 def load_yamnet_model():
-    """Load YAMNet from TensorFlow Hub."""
+    """Load YAMNet from TensorFlow Hub"""
     return hub.load('https://tfhub.dev/google/yamnet/1')
 
 
 @st.cache_resource
 def load_class_names():
-    """Fetch the list of sound classes YAMNet can recognize."""
+    """Fetch the list of sound classes YAMNet can recognize"""
     class_map_path = tf.keras.utils.get_file(
         'yamnet_class_map.csv',
         'https://raw.githubusercontent.com/tensorflow/models/master/research/audioset/yamnet/yamnet_class_map.csv'
@@ -175,6 +175,15 @@ def main():
         page_icon=":microphone:",
         layout="wide"
     )
+
+    # Hide Streamlit menu and footer
+    st.markdown("""
+        <style>
+            #MainMenu {visibility: hidden;}
+            footer {visibility: hidden;}
+            header {visibility: hidden;}
+        </style>
+    """, unsafe_allow_html=True)
 
     st.title("Audio Quality Checker")
     st.markdown("Record audio and analyze its quality using YAMNet AI model")
